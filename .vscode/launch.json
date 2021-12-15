@@ -1,0 +1,45 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "lldb",
+			"request": "launch",
+			"name": "Debug executable 'tiny-with-lib'",
+			"cargo": {
+				"args": [
+					"build",
+					"--bin=tiny-with-lib",
+					"--package=tiny-with-lib"
+				],
+				"filter": {
+					"name": "tiny-with-lib",
+					"kind": "bin"
+				}
+			},
+			"args": [],
+			"cwd": "${workspaceFolder}"
+		},
+		{
+			"type": "lldb",
+			"request": "launch",
+			"name": "Debug unit tests in executable 'tiny-with-lib'",
+			"cargo": {
+				"args": [
+					"test",
+					"--no-run",
+					"--bin=tiny-with-lib",
+					"--package=tiny-with-lib"
+				],
+				"filter": {
+					"name": "tiny-with-lib",
+					"kind": "bin"
+				}
+			},
+			"args": [],
+			"cwd": "${workspaceFolder}"
+		}
+	]
+}
