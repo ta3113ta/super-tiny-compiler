@@ -50,7 +50,7 @@ pub fn tokenize(input: &str) -> Vec<Token> {
     tokens
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum AstNode {
     Program(Vec<AstNode>),
     CallExpression { name: String, params: Vec<AstNode> },
@@ -125,6 +125,52 @@ impl<'a> Parser<'a> {
             name: keyword.to_string(),
             params: vec![node],
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    const INPUT: &str = "(add 2 (subtract 4 2))";
+
+    #[test]
+    fn tokenize_parses_example_input() {
+        assert_eq!(
+            tokenize(INPUT),
+            vec![
+                Token::OpenParen,
+                Token::Add,
+                Token::Number(2),
+                Token::OpenParen,
+                Token::Subtract,
+                Token::Number(4),
+                Token::Number(2),
+                Token::CloseParen,
+                Token::CloseParen,
+            ]
+        );
+    }
+
+    #[test]
+    fn parse_builds_lisp_ast() {
+        let tokens = tokenize(INPUT);
+        let mut parser = Parser::new(&tokens);
+        let ast = parser.parse();
+
+        assert_eq!(
+            ast,
+            AstNode::Program(vec![AstNode::CallExpression {
+                name: "add".to_string(),
+                params: vec![
+                    AstNode::NumberLiteral(2),
+                    AstNode::CallExpression {
+                        name: "subtract".to_string(),
+                        params: vec![AstNode::NumberLiteral(4), AstNode::NumberLiteral(2)],
+                    },
+                ],
+            }])
+        );
     }
 }
 

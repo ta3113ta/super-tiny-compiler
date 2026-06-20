@@ -4,7 +4,7 @@ This project inspiration by [the-super-tiny-compiler](https://github.com/jamiebu
 
 - [x] Tokens
 - [x] AST
-- [ ] Transformation
-- [ ] Traversal
-- [ ] Visitors
-- [ ] Code Generation
+- [x] Transformation
+- [x] Traversal
+- [x] Visitors
+- [x] Code Generation
